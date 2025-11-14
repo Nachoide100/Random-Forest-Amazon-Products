@@ -38,25 +38,25 @@ Las columnas `brand_name` y `seller_name` contenían cientos de valores únicos 
 
 * **Análisis:** Para ello, primero se analizaron las 20 marcas y vendedores más frecuentes.
     
-    ![Análisis Top 20 Marcas](top20brands.png)
-    ![Análisis Top 20 Vendedores](top20sellers.png)
+    ![Análisis Top 20 Marcas](visualizations/top20brands.png)
+    ![Análisis Top 20 Vendedores](visualizations/top20sellers.png)
 
 * **Transformación:** Posteriormente, se implementó una estrategia de agrupación "Top-N". Las 20 categorías principales se mantuvieron y todas las demás se agruparon en una nueva categoría "Other". Esto redujo la dimensionalidad de 500+ a solo 21 categorías, balanceando información y eficiencia.
 
-    ![Transformación de Marcas](brand_transformation.png)
-    ![Transformación de Vendedores](seller_transformation.png)
+    ![Transformación de Marcas](visualizations/brand_transformation.png)
+    ![Transformación de Vendedores](visualizations/seller_transformation.png)
 
 ### Variables Categóricas (Manejo de Jerarquía)
 La columna `breadcrumbs` (ej. `Clothing, Shoes & Jewelry › Men › Clothing...`) contenía información jerárquica valiosa.
 
 * **Análisis:** Un análisis inicial de la categoría de nivel superior (`L0_Category`) reveló un desbalanceo extremo: 706 de 719 productos pertenecían a "Clothing, Shoes & Jewelry".
 
-    ![Categorías L0](L0_categories.png)
+    ![Categorías L0](visualizations/L0_categories.png)
 
 * **Transformación:** Para construir un modelo más especializado y preciso, se tomó la decisión estratégica de **filtrar el dataset** para incluir *solo* productos de "Clothing, Shoes & Jewelry".
 * Posteriormente, se extrajeron subcategorías más granulares (hasta el nivel 3), creando la feature `L3_Subtype`, que demostró tener un poder predictivo mucho mayor.
 
-    ![Subtipos L3](L3_subtypes.png)
+    ![Subtipos L3](visualizations/L3_subtypes.png)
 
 ### Ingeniería de Features de Texto (NLP)
 Se extrajo valor de las columnas de texto de tres maneras:
@@ -125,4 +125,5 @@ El análisis de las *features* más importantes del Random Forest genera informa
 1.  Clonar este repositorio: `git clone [URL_DEL_REPOSITORIO]`
 2.  Crear un entorno virtual e instalar las dependencias: `pip install -r requirements.txt` (Asegúrate de incluir `pandas`, `scikit-learn`, `numpy` y `tabulate`).
 3.  Ejecutar el Jupyter Notebook (`.ipynb`) o el script de Python (`.py`) para entrenar los modelos y reproducir los resultados.
+
 
