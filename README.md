@@ -49,7 +49,7 @@ Las columnas `brand_name` y `seller_name` contenían cientos de valores únicos 
 ### Variables Categóricas (Manejo de Jerarquía)
 La columna `breadcrumbs` (ej. `Clothing, Shoes & Jewelry › Men › Clothing...`) contenía información jerárquica valiosa.
 
-* **Análisis:** Un análisis inicial de la categoría de nivel superior (`L0_Category`) reveló un desbalanceo extremo: 706 de 719 productos pertenecían a "Clothing, Shoes & Jewelry".
+* **Análisis:** Un análisis inicial de la categoría de nivel superior (`L0_Category`) reveló un desbalanceo extremo: 705 de 719 productos pertenecían a "Clothing, Shoes & Jewelry".
 
     ![Categorías L0](visualizations/L0_categories.png)
 
@@ -77,7 +77,7 @@ El `ColumnTransformer` gestiona todos los pasos de preprocesamiento en paralelo:
     1.  `SimpleImputer(strategy='most_frequent')`: Imputa `NaN` (ej. en `L3_Subtype`) sustituyéndolos por el valor más frecuente.
     2.  `OneHotEncoder()`: Convierte las categorías en columnas *dummy* (una columna por categoría y llena de 1 y 0s).
 * **Pipeline de Texto:** (`text_features`)
-    1.  `TfidfVectorizer(max_features=200)`: Analiza el texto y lo convierte en una matriz de 200 *keywords* predictivas.
+    1.  `TfidfVectorizer(stop_words="english", max_features=200)`: Analiza el texto y lo convierte en una matriz de 200 *keywords* predictivas. Además, no tiene en cuenta palabras muy comunes del idioma como "and" o "the".
 
 ## 5. Evaluación y Selección del Modelo
 
@@ -98,13 +98,13 @@ El análisis de los coeficientes (LR) y la importancia de las *features* (RF) re
 ### Modelo 1: Regresión Lineal (Baseline)
 El modelo lineal identificó correctamente palabras clave positivas y negativas. Sin embargo, también demostró una **alta inestabilidad** debido a la multicolinealidad (ej. la "Anomalía KISAH"), haciéndolo poco fiable.
 
-![Top 10 Features Positivas (LR)](top10positivefeatures.png)
-![Top 10 Features Negativas (LR)](top10negativefeatures.png)
+![Top 10 Features Positivas (LR)](visualizations/top10positivefeatures.png)
+![Top 10 Features Negativas (LR)](visualizations/top10negativefeatures.png)
 
 ### Modelo 2: Random Forest (Modelo Ganador)
-El "resumen" del Random Forest (`feature_importances_`) es mucho más estable y fiable. Nos proporciona los verdaderos *drivers* del rendimiento del producto.
+El "resumen" del Random Forest (`feature_importances_`) es mucho más estable y fiable. Nos proporciona los verdaderos conductores o indicadores del rendimiento del producto.
 
-![Top 20 Features (RF)](top20randomforest.png)
+![Top 20 Features (RF)](visualizations/top20randomforest.png)
 
 ## 7. Conclusiones y Valor de Negocio
 
@@ -118,12 +118,13 @@ El análisis de las *features* más importantes del Random Forest genera informa
 
 3.  **El Vendedor Importa (`seller_name_encoded_Amazon.com`):** Ser vendido directamente por "Amazon.com" es el 4º predictor más importante, demostrando que la confianza en el vendedor es un factor clave.
 
-4.  **La Calidad del Listing Importa:** Nuestras *features* de ingeniería (como `customer_review_summary_length`, `title_length` y `about_item_bullets`) aparecieron en el Top 20, probando que el esfuerzo y la profesionalidad del listado se correlacionan con ratings más altos.
+4.  **La Calidad del Listing Importa:** Nuestras *features* de ingeniería (como `customer_review_summary_length`, `title_length` y `about_item_bullets`) aparecieron en el Top 20, probando que el esfuerzo y la profesionalidad del listado se correlacionan con ratings más altos. Títulos de calidad y descripciones detalladas cobran una gran importancia en el rating de un producto. 
 
 ## 8. Cómo Replicar el Proyecto
 
 1.  Clonar este repositorio: `git clone [URL_DEL_REPOSITORIO]`
 2.  Crear un entorno virtual e instalar las dependencias: `pip install -r requirements.txt` (Asegúrate de incluir `pandas`, `scikit-learn`, `numpy` y `tabulate`).
 3.  Ejecutar el Jupyter Notebook (`.ipynb`) o el script de Python (`.py`) para entrenar los modelos y reproducir los resultados.
+
 
 
