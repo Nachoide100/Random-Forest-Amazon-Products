@@ -12,7 +12,7 @@ El **objetivo** de este proyecto es construir un modelo de regresión capaz de:
 1.  **Predecir** el `rating_score` (1-5 estrellas) de un producto basándose en sus características.
 2.  **Identificar** los *drivers* clave que influyen en la satisfacción del cliente, proporcionando información accionable para vendedores y marcas.
 
-El modelo final logra una **precisión promedio de ±0.14 estrellas (MAE)**, identificando la prueba social (`rating_count_int`) y las palabras clave del texto (NLP) asi como los predictores más importantes.
+El modelo final logra una **precisión promedio de ±0.14 estrellas (MAE)**, identificando la prueba social (`rating_count_int`) y las palabras clave del texto (NLP) asi como los predictores numéricos y categóricos más importantes.
 
 ## 2. El Dataset
 
@@ -125,6 +125,7 @@ El análisis de las *features* más importantes del Random Forest genera informa
 1.  Clonar este repositorio: `git clone [URL_DEL_REPOSITORIO]`
 2.  Crear un entorno virtual e instalar las dependencias: `pip install -r requirements.txt` (Asegúrate de incluir `pandas`, `scikit-learn`, `numpy` y `tabulate`).
 3.  Ejecutar el Jupyter Notebook (`.ipynb`) o el script de Python (`.py`) para entrenar los modelos y reproducir los resultados.
+
 
 
 
