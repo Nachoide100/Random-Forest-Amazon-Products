@@ -29,18 +29,19 @@ La fase más crítica fue transformar los datos brutos en *features* numéricas 
 
 ### Variable Objetivo (`rating_score`)
 La columna `rating_stars` (ej. "4.6 out of 5 stars") se limpió y transformó a una columna numérica `float` llamada `rating_score`. Las filas sin un `rating_score` (9 en total) fueron eliminadas, resultando en un dataset final de 719 productos.
+
 ![Rating Transformation](visualizations/rating_transformation.png)
 
 
 ### Variables Categóricas (Manejo de Alta Cardinalidad)
 Las columnas `brand_name` y `seller_name` contenían cientos de valores únicos (alta cardinalidad), lo cual es un problema para el modelado.
 
-* **Análisis:** Se analizaron las 20 marcas y vendedores más frecuentes.
+* **Análisis:** Para ello, primero se analizaron las 20 marcas y vendedores más frecuentes.
     
     ![Análisis Top 20 Marcas](top20brands.png)
     ![Análisis Top 20 Vendedores](top20sellers.png)
 
-* **Transformación:** Se implementó una estrategia de agrupación "Top-N". Las 20 categorías principales se mantuvieron y todas las demás se agruparon en una nueva categoría "Other". Esto redujo la dimensionalidad de 500+ a solo 21 categorías, balanceando información y eficiencia.
+* **Transformación:** Posteriormente, se implementó una estrategia de agrupación "Top-N". Las 20 categorías principales se mantuvieron y todas las demás se agruparon en una nueva categoría "Other". Esto redujo la dimensionalidad de 500+ a solo 21 categorías, balanceando información y eficiencia.
 
     ![Transformación de Marcas](brand_transformation.png)
     ![Transformación de Vendedores](seller_transformation.png)
@@ -61,7 +62,7 @@ La columna `breadcrumbs` (ej. `Clothing, Shoes & Jewelry › Men › Clothing...
 Se extrajo valor de las columnas de texto de tres maneras:
 
 1.  **Features de Longitud:** Se crearon `title_length` y `about_item_length` como *proxies* del "esfuerzo del vendedor".
-2.  **Features de Estructura:** Se creó `about_item_bullets` (contando los `\n`) para cuantificar la calidad del listado.
+2.  **Features de Estructura:** Se creó `about_item_bullets` (contando los `.`) para cuantificar la calidad del listado Supusimos que una descripción con un mayor número de "." era indicador de una descripción más elaborada y de mayor calidad.
 3.  **Features de Contenido (TF-IDF):** Se creó una "super-columna" (`text_features`) combinando `title`, `about_item` y `customer_review_summary`. Esta columna se usó como entrada para un `TfidfVectorizer` dentro del pipeline.
 
 ## 4. Pipeline de Modelado en `scikit-learn`
@@ -70,11 +71,11 @@ Para asegurar la reproducibilidad, evitar el *data leakage* y automatizar el pre
 
 El `ColumnTransformer` gestiona todos los pasos de preprocesamiento en paralelo:
 * **Pipeline Numérico:** (`price_value`, `rating_count_int`, etc.)
-    1.  `SimpleImputer(strategy='median')`: Imputa valores `NaN` (ej. en `price_value`).
+    1.  `SimpleImputer(strategy='median')`: Imputa valores `NaN` (ej. en `price_value`) sustituyéndolos por la mediana.
     2.  `StandardScaler()`: Escala los datos para la Regresión Lineal.
 * **Pipeline Categórico:** (`brand_name_encoded`, `L3_Subtype`, etc.)
-    1.  `SimpleImputer(strategy='most_frequent')`: Imputa `NaN` (ej. en `L3_Subtype`).
-    2.  `OneHotEncoder()`: Convierte las categorías en columnas *dummy*.
+    1.  `SimpleImputer(strategy='most_frequent')`: Imputa `NaN` (ej. en `L3_Subtype`) sustituyéndolos por el valor más frecuente.
+    2.  `OneHotEncoder()`: Convierte las categorías en columnas *dummy* (una columna por categoría y llena de 1 y 0s).
 * **Pipeline de Texto:** (`text_features`)
     1.  `TfidfVectorizer(max_features=200)`: Analiza el texto y lo convierte en una matriz de 200 *keywords* predictivas.
 
@@ -124,3 +125,4 @@ El análisis de las *features* más importantes del Random Forest genera informa
 1.  Clonar este repositorio: `git clone [URL_DEL_REPOSITORIO]`
 2.  Crear un entorno virtual e instalar las dependencias: `pip install -r requirements.txt` (Asegúrate de incluir `pandas`, `scikit-learn`, `numpy` y `tabulate`).
 3.  Ejecutar el Jupyter Notebook (`.ipynb`) o el script de Python (`.py`) para entrenar los modelos y reproducir los resultados.
+
