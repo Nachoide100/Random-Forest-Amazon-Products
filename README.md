@@ -119,13 +119,14 @@ El análisis de las *features* más importantes del Random Forest genera informa
 3.  **El Vendedor Importa (`seller_name_encoded_Amazon.com`):** Ser vendido directamente por "Amazon.com" es el 4º predictor más importante, demostrando que la confianza en el vendedor es un factor clave.
 
 4.  **La Calidad del Listing Importa:** Nuestras *features* de ingeniería (como `customer_review_summary_length`, `title_length` y `about_item_bullets`) aparecieron en el Top 20, probando que el esfuerzo y la profesionalidad del listado se correlacionan con ratings más altos.
-    * ** Acción: Centrar esfuerzos (Marketing) en diseñar títulos y descripciones de productos detalladas y de calidad.  
+    * **Acción:** Centrar esfuerzos (Marketing) en diseñar títulos y descripciones de productos detalladas y de calidad.  
 
 ## 8. Cómo Replicar el Proyecto
 
 1.  Clonar este repositorio: `git clone [URL_DEL_REPOSITORIO]`
 2.  Crear un entorno virtual e instalar las dependencias: `pip install -r requirements.txt` (Asegúrate de incluir `pandas`, `scikit-learn`, `numpy` y `tabulate`).
 3.  Ejecutar el Jupyter Notebook (`.ipynb`) o el script de Python (`.py`) para entrenar los modelos y reproducir los resultados.
+
 
 
 
