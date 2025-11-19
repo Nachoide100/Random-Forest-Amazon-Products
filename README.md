@@ -2,7 +2,7 @@
 
 # Análisis Predictivo de Ratings de Productos en Amazon
 
-> **Proyecto de Portfolio de Data Science:** Este repositorio documenta el proceso de extremo a extremo para predecir el rating de estrellas de productos de Amazon (específicamente en la categoría de ropa) utilizando modelos de Regresión y Random Forest.
+> Este repositorio documenta el proceso de extremo a extremo para predecir el rating de estrellas de productos de Amazon (específicamente en la categoría de ropa) utilizando modelos de Regresión y Random Forest.
 
 ## 1. Problema de Negocio y Objetivos
 
@@ -126,6 +126,7 @@ El análisis de las *features* más importantes del Random Forest genera informa
 1.  Clonar este repositorio: `git clone [URL_DEL_REPOSITORIO]`
 2.  Crear un entorno virtual e instalar las dependencias: `pip install -r requirements.txt` (Asegúrate de incluir `pandas`, `scikit-learn`, `numpy` y `tabulate`).
 3.  Ejecutar el Jupyter Notebook (`.ipynb`) o el script de Python (`.py`) para entrenar los modelos y reproducir los resultados.
+
 
 
 
